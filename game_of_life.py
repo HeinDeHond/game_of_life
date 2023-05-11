@@ -51,32 +51,27 @@ class Board(AbstractLifeGameBoard):
 
     def toggle_cell(self, row: int, col: int) -> None:
         if 0 <= row < self.height and 0 <= col < self.width:
-            if self.board[row][col] == [True]:
-                self.board[row][col] = False
-            elif self.board[row][col] == [False]:
-                self.board[row][col] = False
-        else:
-            raise ValueError
+            self.board[row][col] = not self.board[row][col]
 
     def live_neighbors(self, row: int, col: int) -> int:
         count = 0
-        for i in range(-1, 2):
-            for j in range(-1, 2):
-                if i == 0 and j == 0:
+        for x in range(-1, 2):
+            for y in range(-1, 2):
+                if x == 0 and y == 0:
                     continue
-                count += self.is_alive(row + i, col + j)
+                count += self.is_alive(row + x, col + y)
         return count
 
     def next(self) -> None:
         next_board = [[False] * self.width for _ in range(self.height)]
-        for i in range(self.height):
-            for j in range(self.width):
-                live_neighbors = self.live_neighbors(i, j)
-                if self.board[i][j]:
+        for x_cor in range(self.height):
+            for y_cor in range(self.width):
+                live_neighbors = self.live_neighbors(x_cor, y_cor)
+                if self.board[x_cor][y_cor]:
                     if live_neighbors == 2 or live_neighbors == 3:
-                        next_board[i][j] = True
+                        next_board[x_cor][y_cor] = True
                 elif live_neighbors == 3:
-                    next_board[i][j] = True
+                    next_board[x_cor][y_cor] = True
         self.board = next_board
 
     def is_alive(self, row: int, col: int) -> bool:
@@ -89,7 +84,7 @@ class Board(AbstractLifeGameBoard):
         output = ""
         for row in self.board:
             for cell in row:
-                output += "o " if cell else "- "
+                output += "o" if cell else "."
             output += "\n"
         return output
 
