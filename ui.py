@@ -138,7 +138,7 @@ class InterfaceController:
 
     def print_generation(self):
         self.print_at(
-            f"Generation: {0}",
+            f"Generation: {self.board.generation}",
             self.screen.width // 2 + 2,
             self.screen.height - 1,
         )

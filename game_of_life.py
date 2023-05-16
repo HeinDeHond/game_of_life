@@ -42,6 +42,7 @@ class Board(AbstractLifeGameBoard):
         self.width = width
         self.height = height
         self.board = [[False] * self.width for _ in range(self.height)]
+        self.generation = 0
 
     def place_cell(self, row: int, col: int):
         if 0 <= row < self.height and 0 <= col < self.width:
@@ -73,6 +74,7 @@ class Board(AbstractLifeGameBoard):
                 elif live_neighbors == 3:
                     next_board[x_cor][y_cor] = True
         self.board = next_board
+        self.generation += 1
 
     def is_alive(self, row: int, col: int) -> bool:
         if 0 <= row < self.height and 0 <= col < self.width:
@@ -89,14 +91,12 @@ class Board(AbstractLifeGameBoard):
         return output
 
 
-c = CELL_SYMBOL = "o"
-
 if __name__ == "__main__":
-    board = Board(10, 10)
-    for i in range(5):
-        board.place_cell(3, i)
+    board = Board(3, 3)
+    for i in range(3):
+        board.place_cell(1, i)
 
-    for i in range(10):
+    for i in range(100):
         print(board)
         board.next()
-        sleep(1)
+        sleep(0.5)
